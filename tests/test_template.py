@@ -2,13 +2,13 @@ from main_app_template import main_app
 
 
 def test_main_app(mocker):
-    patched_request = mocker.patch("main_app_template.urlopen", return_value = "OK")
+    patched_request = mocker.patch("main_app_template.urlopen", return_value="OK")
     result = main_app()
     assert result == "Running"
     assert patched_request.call_count == 1
 
 
-""" async example"""
+# *** async example ***
 # import asyncio
 # import pytest
 

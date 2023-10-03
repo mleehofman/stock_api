@@ -60,7 +60,7 @@ extend-ignore =
 per-file-ignores =
     # Use of assert detected.
     # Missing docstring in public class, method, function, package, nested class, __init__
-    test/**: S101,D101,D102,D103,D104,D105,D106,D107
+    tests/**: S101,D101,D102,D103,D104,D105,D106,D107
 exclude =
     .git,
     docs,
