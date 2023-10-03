@@ -3,8 +3,12 @@ Python Project Template
 This project is a Python Project Template. It allows you to sttart a new project quickly.
 It has all the necessary settings and packages that allow you to start a new project with all the agreed best practices.
 
+---
 
-## Main Requirements/Packages:
+*Please keep this repo up-to-date. Don't hesitate to create Merge Requests with proposed changes/updates.*
+
+
+## Main requirements/packages:
 
 - Python 3.11+
 - [Pydantic](https://docs.pydantic.dev/latest/) (dataclasses)
@@ -39,7 +43,7 @@ git remote rm origin
 # check current remote urls
 git remote -v
 
-# add new origin ("example"). Note: example repo doesn't exist.
+# add new origin ("example"). Note: "example" repo doesn't exist in Logex the bitbucket. It is used as example.
 git remote add origin git@bitbucket.org:logexbv/example.git
 ```
 
@@ -59,7 +63,14 @@ Install packages:
 
 ## Development
 Remove or edit/update files:
+
 - `src/main_app_template.py`
 - `tests/test_template.py`
 
 Now you are ready to develop your new project! Dont forget to update your **README.md** file accordingly.
+
+
+## Troubleshooting
+
+In case you have issues with running Python commands:
+* use `poetry run python <some command>` instead of `python <some command>`. [Docs](https://python-poetry.org/docs/basic-usage/#using-poetry-run)
