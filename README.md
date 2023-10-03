@@ -73,7 +73,9 @@ Now you are ready to develop your new project! Dont forget to update your **READ
 ## Troubleshooting
 
 In case you have issues with running Python commands:
+
 - use `poetry run python <some command>` instead of `python <some command>`. [Docs](https://python-poetry.org/docs/basic-usage/#using-poetry-run)
 
 Tests:
+
 - In order to debug tests and using breakpoints (in tests) you need to run tests with `--no-cov` argument
