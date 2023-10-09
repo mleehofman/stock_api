@@ -57,7 +57,7 @@ Example:
 
 Install packages:
 
-- `pip install poetry`
+- `pip install poetry=="1.6.1"`. Install fixed version to avoid including breaking changes
 - `poetry install`
 - `pre-commit install`
 
@@ -68,6 +68,14 @@ Remove or edit/update files:
 - `tests/test_template.py`
 
 Now you are ready to develop your new project! Dont forget to update your **README.md** file accordingly.
+
+### Pipelines
+
+Bitbucket pipelines are configured to run Quality Checks and Unit Tests using the `Python 3.11` on all Pull Requests and on the `main` branch. Keep in mind to change the image name and all the occurencies of `python-project-template`.
+
+### Tests
+
+- `poetry run pytest tests/` or `pytest tests/`
 
 
 ## Troubleshooting

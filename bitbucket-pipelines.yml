@@ -1,0 +1,111 @@
+image:
+  name: eu.gcr.io/mrdm-docker-registry/images/build/python:3-alpine
+  username: _json_key
+  password: '$GCLOUD_GCR_KEY'
+
+.version: &version |
+  IMAGE=eu.gcr.io/mrdm-docker-registry/mrdm-python-project-template
+  VERSION=${VERSION:-$BITBUCKET_BUILD_NUMBER}
+
+.test: &test |
+  pip install poetry=="1.6.1"
+  poetry config virtualenvs.create false \
+         && poetry install --no-root --no-interaction --without quality_checks
+  poetry run pytest tests/
+
+.quality_checks: &quality_checks |
+  pip install poetry=="1.6.1"
+  poetry config virtualenvs.create false \
+         && poetry install --no-root --no-interaction --without unit_tests
+  poetry run black --check .
+  poetry run flake8 --verbose
+  poetry run mypy .
+  poetry run isort . --check
+
+.build: &build |
+  echo ${GCLOUD_GCR_KEY} | gcloud auth activate-service-account --key-file=-
+  gcloud auth configure-docker
+  docker build -f Dockerfile -t ${IMAGE}:${VERSION} .
+  docker push ${IMAGE}:${VERSION}
+  gcloud container images list-tags ${IMAGE} --sort-by=~TIMESTAMP --format='get(digest)' --filter="-tags ~test AND -tags ~accept AND -tags ~prod" --limit=unlimited | tail -n +500 | xargs -I {arg} gcloud container images delete "${IMAGE}@{arg}" --force-delete-tags --quiet
+
+.deploy: &deploy |
+  echo ${!GCLOUD_GKE_KEY} | base64 -d > ~/.gcloud_gke_key.json
+  gcloud auth activate-service-account --key-file ~/.gcloud_gke_key.json
+  gcloud container clusters get-credentials ${CLUSTER}-cluster --project=${PROJECT} --zone=${ZONE}
+  mv ~/.gcloud_gke_key.json ~/.config/gcloud/application_default_credentials.json
+  #sops --decrypt deployment-files/helm/values/${TENANT}/values-${STAGE}.enc.yaml > deployment-files/helm/values/${TENANT}/values-${STAGE}.raw.yaml
+  sed -i 's|##VERSION##|'${VERSION}'|g' deployment-files/helm/Chart.yaml
+  helm upgrade --install -n ${NAMESPACE} mrdm-python-project-template-${STAGE} --set version=${VERSION} -f deployment-files/helm/values/values-${STAGE}.yaml deployment-files/helm
+  echo ${GCLOUD_GCR_KEY} | gcloud auth activate-service-account --key-file=-
+  gcloud auth configure-docker
+  docker pull ${IMAGE}:${VERSION}
+  docker tag ${IMAGE}:${VERSION} ${IMAGE}:${STAGE}
+  docker push ${IMAGE}:${STAGE}
+
+pipelines:
+  pull-requests:
+    # Run on every commit in Pull Requests
+    '**':
+      - step:
+          name: Quality Checks
+          image: python:3.11
+          # NOTE: clear cache when adding a new (quality check) dependency package
+          caches:
+            - pip
+          script:
+            - *quality_checks
+      - step:
+          name: Unit Tests
+          image: python:3.11
+          # NOTE: clear cache when adding a new (unit test) dependency package
+          caches:
+            - pip
+          script:
+            - *test
+  branches:
+    # Run on every commit in the `main` branch
+    main:
+      - step:
+          name: Quality Checks
+          image: python:3.11
+          # NOTE: clear cache when adding a new (quality check) dependency package
+          caches:
+            - pip
+          script:
+            - *quality_checks
+      - step:
+          name: Unit Tests
+          image: python:3.11
+          # NOTE: clear cache when adding a new (unit test) dependency package
+          caches:
+            - pip
+          script:
+            - *test
+      # - step:
+      #     name: Build/Package Test
+      #     runs-on:
+      #       - 'gcp.nl'
+      #       - 'self.hosted'
+      #       - 'linux'
+      #     services:
+      #       - docker
+      #     caches:
+      #       - docker
+      #     script:
+      #       - *version
+      #       - *build
+      # - step:
+      #     name: Deploy Test
+      #     runs-on:
+      #       - 'gcp.nl'
+      #       - 'self.hosted'
+      #       - 'linux'
+      #     deployment: Test
+      #     services:
+      #       - docker
+      #     caches:
+      #       - docker
+      #     script:
+      #       - *version
+      #       - *deploy
