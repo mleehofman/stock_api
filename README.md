@@ -1,7 +1,6 @@
-Python Project Template
+Python Project Marcel Hofman
 =======
-This project is a Python Project Template. It allows you to sttart a new project quickly.
-It has all the necessary settings and packages that allow you to start a new project with all the agreed best practices.
+Change of READ ME
 
 ---
 
