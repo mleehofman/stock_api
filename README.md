@@ -4,6 +4,11 @@ A python program to get information about stocks
 
 ***This program makes use of the fmpsdk library and the
 financial modeling prep: https://site.financialmodelingprep.com/***
+<<<<<<< HEAD
+=======
+
+*Please keep this repo up-to-date. Don't hesitate to create Merge Requests with proposed changes/updates.*
+>>>>>>> a4dc2e3 (improve_read_me_file)
 
 
 ## Main requirements/packages:
