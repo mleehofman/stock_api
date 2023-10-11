@@ -1,8 +1,9 @@
-Python Project Marcel Hofman
-=======
-Change of READ ME
+# stocks_api
+stock_api
+A python program to get information about stocks
 
----
+***This program makes use of the fmpsdk library and the
+financial modeling prep: https://site.financialmodelingprep.com/***
 
 *Please keep this repo up-to-date. Don't hesitate to create Merge Requests with proposed changes/updates.*
 
