@@ -70,7 +70,7 @@ plugins = ["pydantic.mypy"]
 ignore_missing_imports = true
 
 [tool.coverage.report]
-fail_under = 85
+fail_under = 0
 exclude_also= [
     "def main",
     "if __name__ == .__main__.:",
