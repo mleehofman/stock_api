@@ -1,8 +1,9 @@
 """Modules required for code"""
 import asyncio
 
+import pandas as pd
 from codetiming import Timer
-from helper_functions import AsyncAPIFunctions, TradesOverview
+from helper_functions import AsyncAPIFunctions, ExcelOperations, Globals, TradesOverview
 from technical_trade_analysis import TradeTechnicalRequests
 
 
@@ -20,5 +21,11 @@ async def main():
 if __name__ == "__main__":
     t = Timer(name="class")
     t.start()
+    excel_operations = ExcelOperations()
+    excel_operations.clear_sheets()
     results = asyncio.run(main())
+    writer = pd.ExcelWriter("analytics_dataframes.xlsx", engine="xlsxwriter")
+    Globals.INCOME_STATEMENT.to_excel(writer, sheet_name="INCOME_STATEMENT")
+    Globals.FINANCIAL_RATIOS.to_excel(writer, sheet_name="FINANCIAL_RATIOS")
+    writer.close()
     t.stop()

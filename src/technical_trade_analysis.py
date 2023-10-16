@@ -23,7 +23,7 @@ class TradeTechnicalRequests:
         result = fmpsdk.income_statement(apikey=self.api_key, symbol=symbol, period="quarter")
         self.dataframe = DataFrameFunctions(symbol=symbol)
         if len(result) > 0:
-            self.dataframe.write_to_dataframe(data=result)
+            self.dataframe.write_to_dataframe(data=result, name_df="INCOME_STATEMENT")
             print(f"successfully run {symbol}")
 
     async def get_financial_ratios(self, symbol):
@@ -31,7 +31,7 @@ class TradeTechnicalRequests:
         result = fmpsdk.financial_ratios(apikey=self.api_key, symbol=symbol, period="quarter")
         self.dataframe = DataFrameFunctions(symbol=symbol)
         if len(result) > 0:
-            self.dataframe.write_to_dataframe(data=result)
+            self.dataframe.write_to_dataframe(data=result, name_df="FINANCIAL_RATIOS")
             print(f"successfully run {symbol}")
 
     async def get_trade_info(self, symbol):
