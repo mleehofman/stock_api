@@ -78,6 +78,21 @@ class DataFrameFunctions:
         # print(list(df.columns))
         # trade_df = df.append(df, ignore_index=True)
 
+        # class_dict = vars(Globals)
+
+        # # Access and print the names of class variables
+        # class_variable_names = list(class_dict.keys())
+        # print(class_variable_names)
+
+        class_attributes = dir(Globals)
+
+        # Filter and print only the class variable names
+        class_variable_names = [attr for attr in class_attributes if not callable(getattr(Globals, attr))]
+
+        if name_df in class_variable_names:
+            print("variable name found: ")
+            a = class_variable_names.index(name_df)
+            print(f"Index of {name_df} in the list:", a)
         if name_df == "INCOME_STATEMENT":
             Globals.INCOME_STATEMENT = pd.concat([Globals.INCOME_STATEMENT, df], ignore_index=True)
         if name_df == "FINANCIAL_RATIOS":
@@ -87,7 +102,7 @@ class DataFrameFunctions:
 class ExcelOperations:
     """Class to perform excel functions"""
 
-    def delete(sheet):
+    async def delete(sheet):
         """Deletes a given sheet"""
         # continuously delete row 2 until there
         # is only a single row left over
@@ -96,9 +111,9 @@ class ExcelOperations:
             # this method removes the row 2
             sheet.delete_rows(2)
         # return to main function
-        return
+        # return
 
-    def clear_sheets(self):
+    async def clear_sheets(self):
         """Obtains all sheets for excel file"""
         # enter your file path
         path = "analytics_dataframes.xlsx"
@@ -108,22 +123,18 @@ class ExcelOperations:
 
         # select the sheet
         sheet = book["INCOME_STATEMENT"]
-
         print("Maximum rows before removing:", sheet.max_row)
 
-        ExcelOperations.delete(sheet)
-
+        await ExcelOperations.delete(sheet)
         print("Maximum rows after removing:", sheet.max_row)
 
         # select the sheet
         sheet = book["FINANCIAL_RATIOS"]
-
         print("Maximum rows before removing:", sheet.max_row)
 
-        ExcelOperations.delete(sheet)
-
+        await ExcelOperations.delete(sheet)
         print("Maximum rows after removing:", sheet.max_row)
 
         # save the file to the path
-
         book.save(path)
+        # return

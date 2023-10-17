@@ -9,6 +9,8 @@ from technical_trade_analysis import TradeTechnicalRequests
 
 async def main():
     """Function to run main"""
+    excel_operations = ExcelOperations()
+    await excel_operations.clear_sheets()
     api_function = AsyncAPIFunctions()
     api_key = await api_function.async_load_api_keys()
     trades = TradesOverview(api_key=api_key)
@@ -21,8 +23,6 @@ async def main():
 if __name__ == "__main__":
     t = Timer(name="class")
     t.start()
-    excel_operations = ExcelOperations()
-    excel_operations.clear_sheets()
     results = asyncio.run(main())
     writer = pd.ExcelWriter("analytics_dataframes.xlsx", engine="xlsxwriter")
     Globals.INCOME_STATEMENT.to_excel(writer, sheet_name="INCOME_STATEMENT")
