@@ -2,12 +2,11 @@
 import asyncio
 import unittest
 
-# from src.helper_functions import Globals
+# from src.helper_functions import ApiHandling
 
 # import pytest
 
-# # from src.main_async_run import AsyncAPIFunctions
-
+# from src.main_async_run import AsyncAPIFunctions
 
 # @pytest.mark.asyncio
 # async def test_get_api_key() -> None:
@@ -29,23 +28,25 @@ class testfunction(unittest.TestCase):
         """This is a simple test"""
         x = 4
         y = 5
-        print(x + y)
         self.assertEqual(x + y, 9)
+        return x
 
 
-class TestHelperFunctions(unittest.IsolatedAsyncioTestCase):
+class Test(unittest.TestCase):
     """A class to represent a test."""
 
-    async def test_api_key(self):
-        """This is a simple test"""
-        # a = Globals.FINANCIAL_RATIOS
-        await asyncio.sleep(0.1)
-        print("ok")
-        # api_key = await AsyncAPIFunctions.async_load_api_keys()
-        # print('ok')
-        # self.assertIsNotNone(api_key)
+    async def test_functionality(self):
+        """A class to represent a test."""
+        result = await async_add(4, 5)
+        self.assertEqual(9, result)
 
 
-# if __name__ == "__main__":
-#     test = testfunction()
-#     test.test_function()
+async def async_add(x, y, delay=0.1):
+    """A class to represent a test."""
+    await asyncio.sleep(delay)
+    return x + y
+
+
+if __name__ == "__main__":
+    test = testfunction()
+    test.test_function()

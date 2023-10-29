@@ -6,6 +6,8 @@ from codetiming import Timer
 from helper_functions import AsyncAPIFunctions, ExcelOperations, Globals, TradesOverview
 from technical_trade_analysis import TradeTechnicalRequests
 
+# from test.test_helper_functions import testfunction
+
 
 async def main():
     """Function to run main"""
@@ -29,3 +31,5 @@ if __name__ == "__main__":
     Globals.FINANCIAL_RATIOS.to_excel(writer, sheet_name="FINANCIAL_RATIOS")
     writer.close()
     t.stop()
+    # x = testfunction.test_function()
+    # print(f'this is x: {x}')
