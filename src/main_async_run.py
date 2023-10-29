@@ -6,7 +6,7 @@ from codetiming import Timer
 from helper_functions import AsyncAPIFunctions, ExcelOperations, Globals, TradesOverview
 from technical_trade_analysis import TradeTechnicalRequests
 
-# from test.test_helper_functions import testfunction
+# from api_stocks_package.test.test_helper_functions import testfunction
 
 
 async def main():

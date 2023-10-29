@@ -1,12 +1,12 @@
 # # from pathlib import Path
 import asyncio
-import unittest
 
-# from src.helper_functions import ApiHandling
+# import sys
+import unittest
 
 # import pytest
 
-# from src.main_async_run import AsyncAPIFunctions
+# from api_stocks_package.src.helper_functions import CheckPoint
 
 # @pytest.mark.asyncio
 # async def test_get_api_key() -> None:
@@ -28,7 +28,17 @@ class testfunction(unittest.TestCase):
         """This is a simple test"""
         x = 4
         y = 5
+
+        # sys.path.append('/home/qiaokeli/projects/python_template_project/api_stocks_package/test')
+        # print('Updated sys.path:', sys.path)
+        # print('ok')
+
         self.assertEqual(x + y, 9)
+
+        # n = CheckPoint.check_call()
+        # print('n')
+        # self.assertEqual(n, 10)
+
         return x
 
 
@@ -38,12 +48,14 @@ class Test(unittest.TestCase):
     async def test_functionality(self):
         """A class to represent a test."""
         result = await async_add(4, 5)
+        print("ok")
         self.assertEqual(9, result)
 
 
 async def async_add(x, y, delay=0.1):
     """A class to represent a test."""
-    await asyncio.sleep(delay)
+    # await AsyncAPIFunctions.async_load_api_keys()
+    await asyncio.sleep(1)
     return x + y
 
 

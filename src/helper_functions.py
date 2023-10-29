@@ -16,6 +16,14 @@ class Globals:
     FINANCIAL_RATIOS = pd.DataFrame()
 
 
+# class CheckPoint:
+#     """Definition of dataframes"""
+
+#     def check_call(self):
+#         x = 10
+#         return x
+
+
 class AsyncAPIFunctions:
     """Class for all general API related functions"""
 
